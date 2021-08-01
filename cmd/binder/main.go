@@ -7,6 +7,7 @@ import (
 	"github.com/alipniczkij/binder/internal/commands/subscribe"
 	"github.com/alipniczkij/binder/internal/commands/unlabel"
 	"github.com/alipniczkij/binder/internal/commands/unsubscribe"
+	"github.com/alipniczkij/binder/internal/gitlab"
 	"github.com/alipniczkij/binder/internal/handler"
 	"github.com/alipniczkij/binder/internal/sender/slack"
 	"github.com/alipniczkij/binder/internal/storage/bbolt"
@@ -36,9 +37,14 @@ func main() {
 
 	mapper := bbolt.New(cfg.MappingPath)
 	defer mapper.Close()
+	git, err := gitlab.New(cfg.Gitlab)
+	if err != nil {
+		log.Fatalf("can't create gitlab client")
+	}
+
 
 	cmds := map[string]commands.Handler{
-		commands.Subscribe:   subscribe.New(mapper),
+		commands.Subscribe:   subscribe.New(mapper, git),
 		commands.Unsubscribe: unsubscribe.New(mapper),
 		commands.Label:       label.New(mapper),
 		commands.Unlabel:     unlabel.New(mapper),
@@ -61,7 +67,7 @@ func main() {
 
 	timeout, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelFunc()
-	err := serv.Shutdown(timeout)
+	err = serv.Shutdown(timeout)
 	if err != nil {
 		log.Printf("Error when shutdown app: %v", err)
 	}

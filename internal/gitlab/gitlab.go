@@ -83,6 +83,26 @@ func (c Client) Unfurl(u *url.URL) (slack.Attachment, error) {
 	}, nil
 }
 
+func (c Client) ValidateSubscription(name string) error {
+	pieces := strings.Split(name, "/")
+	switch len(pieces) {
+	case 1:
+		_, _, err := c.client.Groups.GetGroup(name)
+		if err != nil {
+			return fmt.Errorf("group not found")
+		}
+		return nil
+	case 2:
+		_, _, err := c.client.Projects.GetProject(name, &g.GetProjectOptions{})
+		if err != nil {
+			return fmt.Errorf("project not found")
+		}
+		return nil
+	default:
+		return fmt.Errorf("invalid name")
+	}
+}
+
 func GetProjectIDFromURL(u *url.URL) (string, error) {
 	path := strings.Split(strings.Trim(u.Path, "/"), "/")
 	if len(path) < 2 {

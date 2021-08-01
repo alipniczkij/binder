@@ -53,6 +53,19 @@ Example:
 `/label -delete ux`  
 
 ---
+
+###Bbolt storage
+
+There is structure for storage:
+
+- Buckets - command name
+- Keys:
+  1. For /subscribe and /unsubscribe commands – group or project name
+  2. For /label and /unlabel commands – Slack channel id
+- Values:
+  1. For /subscribe and /unsubscribe commands – slice of Slack channels IDs
+  2. For /label and /unlabel commands – slice of labels names
+
 ## TODO
 
 - Tests

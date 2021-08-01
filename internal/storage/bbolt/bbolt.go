@@ -99,7 +99,7 @@ func (m *Mapper) Delete(key, value, bucket string) error {
 		}
 		existed, found := m.Get(key, bucket)
 		if !found {
-			return nil
+			return fmt.Errorf("not found")
 		}
 		updated := m.deleteValue(existed, value)
 		data, err := m.encodeValue(updated)
