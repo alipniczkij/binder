@@ -55,7 +55,7 @@ Example:
 
 ---
 
-##Bbolt storage
+## Bbolt storage
 
 There is structure for storage:
 
