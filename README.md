@@ -73,3 +73,4 @@ There is structure for storage:
 - Tests
 - Gitlab webhook token support
 - Docker
+- Command that list all projects subscriptions for Slack channel
