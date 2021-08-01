@@ -29,7 +29,8 @@ go run cmd/binder/main.go
     2. Add a webhook in gitlab's group or project. The URL is where the binder works. Trigger - Issue Events
     3. Send the above command at the Slack channel/chat
 
-####IMPORTANT
+**IMPORTANT**
+
 If you want to subscribe your channel to notifications for a specific project (for example, your_group/binder), you need to check whether there is a webhook on the group to which the project belongs.
 If there is a webhook for group, then you do NOT need to add a webhook for the project. If you add a webhook to the project as well as group, notifications will be duplicated in all channels
 
@@ -54,7 +55,7 @@ Example:
 
 ---
 
-###Bbolt storage
+##Bbolt storage
 
 There is structure for storage:
 
