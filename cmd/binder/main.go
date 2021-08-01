@@ -42,7 +42,6 @@ func main() {
 		log.Fatalf("can't create gitlab client")
 	}
 
-
 	cmds := map[string]commands.Handler{
 		commands.Subscribe:   subscribe.New(mapper, git),
 		commands.Unsubscribe: unsubscribe.New(mapper),

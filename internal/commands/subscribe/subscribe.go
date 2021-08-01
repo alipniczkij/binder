@@ -12,7 +12,7 @@ import (
 type Subscriber struct {
 	commands.Command
 	storage storage.Mapper
-	git *gitlab.Client
+	git     *gitlab.Client
 }
 
 type args struct {
@@ -25,7 +25,7 @@ func New(s storage.Mapper, g *gitlab.Client) *Subscriber {
 			Usage: "{project name or group} (ex. 'galaxy/eclipse')",
 		},
 		storage: s,
-		git: g,
+		git:     g,
 	}
 }
 

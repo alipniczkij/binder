@@ -2,9 +2,9 @@ package unsubscribe
 
 import (
 	"fmt"
-	"github.com/slack-go/slack"
 	"github.com/alipniczkij/binder/internal/commands"
 	"github.com/alipniczkij/binder/internal/storage"
+	"github.com/slack-go/slack"
 	"log"
 )
 

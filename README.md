@@ -68,6 +68,7 @@ There is structure for storage:
 
 ## TODO
 
+- Add commentaries
 - Tests
 - Gitlab webhook token support
 - Docker

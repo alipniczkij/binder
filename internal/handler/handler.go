@@ -3,11 +3,11 @@ package handler
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/gorilla/mux"
-	"github.com/slack-go/slack"
 	"github.com/alipniczkij/binder/internal/commands"
 	"github.com/alipniczkij/binder/internal/sender"
 	"github.com/alipniczkij/binder/pkg/models"
+	"github.com/gorilla/mux"
+	"github.com/slack-go/slack"
 	"io"
 	"log"
 	"net/http"
