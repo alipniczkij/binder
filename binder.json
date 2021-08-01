@@ -1,0 +1,15 @@
+{
+  "log_path": "/path/to/binder.log",
+  "mapping_path": "/path/to/bbolt.storage",
+  "server": {
+    "host": "webhook_host",
+    "port": "webhook_port"
+  },
+  "slack": {
+    "token": "token"
+  },
+  "gitlab": {
+    "token": "token",
+    "base_url": "https://gitlab.com/"
+  }
+}

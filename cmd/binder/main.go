@@ -20,7 +20,7 @@ import (
 	"time"
 )
 
-var configPath = "/var/lib/binder/binder.json"
+var configPath = "../../binder.json"
 
 func main() {
 	cfg := config.LoadConfig(configPath)

@@ -24,8 +24,8 @@ func New(path string) *Mapper {
 	}
 }
 
-func (m *Mapper) Get(id, bucket string) ([]string, bool) {
-	key := m.bytes(id)
+func (m *Mapper) Get(key, bucket string) ([]string, bool) {
+	k := m.bytes(key)
 	bucketName := m.bytes(bucket)
 	var foundValue []byte
 
@@ -34,9 +34,9 @@ func (m *Mapper) Get(id, bucket string) ([]string, bool) {
 		if b == nil {
 			return fmt.Errorf("can't find bucket %s", bucket)
 		}
-		foundValue = b.Get(key)
+		foundValue = b.Get(k)
 		if foundValue == nil {
-			return fmt.Errorf("no value for this id %s", id)
+			return fmt.Errorf("no value for this key %s", key)
 		}
 		return nil
 	})
@@ -52,7 +52,7 @@ func (m *Mapper) Get(id, bucket string) ([]string, bool) {
 	return res, true
 }
 
-func (m *Mapper) Store(id, value, bucket string) error {
+func (m *Mapper) Store(key, value, bucket string) error {
 	bucketName := m.bytes(bucket)
 	err := m.db.Update(func(tx *bbolt.Tx) error {
 		b, err := tx.CreateBucket(bucketName)
@@ -60,10 +60,10 @@ func (m *Mapper) Store(id, value, bucket string) error {
 			if errors.Is(err, bbolt.ErrBucketExists) {
 				b = tx.Bucket(bucketName)
 			} else {
-				return fmt.Errorf("get bucket fail: %s. id: %s. Value: %s", err.Error(), id, value)
+				return fmt.Errorf("get bucket fail: %s. key: %s. Value: %s", err.Error(), key, value)
 			}
 		}
-		existed, found := m.Get(id, bucket)
+		existed, found := m.Get(key, bucket)
 		var data []byte
 		if already := contains(existed, value); already {
 			return nil
@@ -77,9 +77,9 @@ func (m *Mapper) Store(id, value, bucket string) error {
 		if err != nil {
 			return fmt.Errorf("error while encoding %s: %s", value, err.Error())
 		}
-		err = b.Put(m.bytes(id), data)
+		err = b.Put(m.bytes(key), data)
 		if err != nil {
-			return fmt.Errorf("put fail: %s. id: %s. Value: %s", err.Error(), id, value)
+			return fmt.Errorf("put fail: %s. key: %s. Value: %s", err.Error(), key, value)
 		}
 		return nil
 	})
@@ -89,15 +89,15 @@ func (m *Mapper) Store(id, value, bucket string) error {
 	return nil
 }
 
-func (m *Mapper) Delete(id, value, bucket string) error {
-	key := m.bytes(id)
+func (m *Mapper) Delete(key, value, bucket string) error {
+	k := m.bytes(key)
 	bucketName := m.bytes(bucket)
 	err := m.db.Update(func(tx *bbolt.Tx) error {
 		b := tx.Bucket(bucketName)
 		if b == nil {
 			return nil
 		}
-		existed, found := m.Get(id, bucket)
+		existed, found := m.Get(key, bucket)
 		if !found {
 			return nil
 		}
@@ -106,9 +106,9 @@ func (m *Mapper) Delete(id, value, bucket string) error {
 		if err != nil {
 			return fmt.Errorf("error while encoding %s: %s", value, err.Error())
 		}
-		err = b.Put(key, data)
+		err = b.Put(k, data)
 		if err != nil {
-			return fmt.Errorf("put fail: %s. id: %s. Value: %s", err.Error(), id, value)
+			return fmt.Errorf("put fail: %s. key: %s. Value: %s", err.Error(), key, value)
 		}
 		return nil
 	})

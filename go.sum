@@ -146,8 +146,6 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.4.0 h1:2E4SXV/wtOkTonXsotYi4li6zVWxYlZuYNCXe9XRJyk=
 github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
-github.com/xanzy/go-gitlab v0.50.0 h1:t7IoYTrnLSbdEZN7d8X/5zcr+ZM4TZQ2mXa8MqWlAZQ=
-github.com/xanzy/go-gitlab v0.50.0/go.mod h1:Q+hQhV508bDPoBijv7YjK/Lvlb4PhVhJdKqXVQrUoAE=
 github.com/xanzy/go-gitlab v0.50.1-0.20210622091936-95496389c14f h1:qRLZzkBCZuDGOy7dRirhpjp2dFj/jQXYkTSQeLT0h74=
 github.com/xanzy/go-gitlab v0.50.1-0.20210622091936-95496389c14f/go.mod h1:Q+hQhV508bDPoBijv7YjK/Lvlb4PhVhJdKqXVQrUoAE=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
