@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/alipniczkij/binder/internal/commands"
 	"github.com/alipniczkij/binder/internal/commands/label"
+	"github.com/alipniczkij/binder/internal/commands/list"
 	"github.com/alipniczkij/binder/internal/commands/subscribe"
 	"github.com/alipniczkij/binder/internal/commands/unlabel"
 	"github.com/alipniczkij/binder/internal/commands/unsubscribe"
@@ -47,6 +48,7 @@ func main() {
 		commands.Unsubscribe: unsubscribe.New(mapper),
 		commands.Label:       label.New(mapper),
 		commands.Unlabel:     unlabel.New(mapper),
+		commands.List:        list.New(mapper),
 	}
 
 	sender := slack.New(cfg.Slack, mapper)
