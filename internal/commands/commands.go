@@ -17,6 +17,7 @@ const (
 	Unsubscribe = "/unsubscribe"
 	Label       = "/label"
 	Unlabel     = "/unlabel"
+	List        = "/list"
 )
 
 type Command struct {

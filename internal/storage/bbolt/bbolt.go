@@ -52,6 +52,26 @@ func (m *Mapper) Get(key, bucket string) ([]string, bool) {
 	return res, true
 }
 
+func (m *Mapper) GetKeys(bucket string) ([]string, error) {
+	bucketName := m.bytes(bucket)
+	keys := make([]byte, 0)
+	err := m.db.View(func(tx *bbolt.Tx) error {
+		b := tx.Bucket(bucketName)
+
+		c := b.Cursor()
+
+		for k, _ := c.First(); k != nil; k, _ = c.Next() {
+			keys = append(keys, k...)
+		}
+
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return m.decodeValue(keys)
+}
+
 func (m *Mapper) Store(key, value, bucket string) error {
 	bucketName := m.bytes(bucket)
 	err := m.db.Update(func(tx *bbolt.Tx) error {

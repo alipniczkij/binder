@@ -35,7 +35,7 @@ func (s *Subscriber) Execute(c slack.SlashCommand) slack.Msg {
 		return s.Command.Help(err.Error())
 	}
 
-	err = s.processSubscription(*args.id, c)
+	err = s.processSubscription(*args.id, c.ChannelID)
 	if err != nil {
 		return s.Command.Help(err.Error())
 	}
@@ -43,12 +43,12 @@ func (s *Subscriber) Execute(c slack.SlashCommand) slack.Msg {
 	return s.Command.TextMessage("Successfully subscribed")
 }
 
-func (s *Subscriber) processSubscription(id string, c slack.SlashCommand) error {
+func (s *Subscriber) processSubscription(id, channelID string) error {
 	err := s.git.ValidateSubscription(id)
 	if err != nil {
 		return err
 	}
-	err = s.storage.Store(id, c.ChannelID, commands.Subscribe)
+	err = s.storage.Store(id, channelID, commands.Subscribe)
 	if err != nil {
 		log.Println(err)
 		return fmt.Errorf("error save subscription to mapper")

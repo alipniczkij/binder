@@ -52,6 +52,14 @@ If there is a webhook for group, then you do NOT need to add a webhook for the p
 The /label and /unlabel commands have the -delete subcommand, which allows you to delete labels previously added by the corresponding commands.
 Example:
 `/label -delete ux`  
+- /list
+
+  The command shows all subscriptions and labels/unlabels of group
+  ```
+  Subscribed: ...
+  Labels: ...
+  Unlabels: ...
+  ```
 
 ---
 
@@ -73,4 +81,3 @@ There is structure for storage:
 - Tests
 - Gitlab webhook token support
 - Docker
-- Command that list all projects subscriptions for Slack channel
