@@ -5,6 +5,7 @@ import (
 	"github.com/alipniczkij/binder/internal/commands"
 	"github.com/alipniczkij/binder/internal/gitlab"
 	"github.com/alipniczkij/binder/internal/storage"
+	"github.com/alipniczkij/binder/pkg/multi_error"
 	"github.com/slack-go/slack"
 	"log"
 )
@@ -16,7 +17,7 @@ type Subscriber struct {
 }
 
 type args struct {
-	id *string
+	projects []string
 }
 
 func New(s storage.Mapper, g *gitlab.Client) *Subscriber {
@@ -30,14 +31,20 @@ func New(s storage.Mapper, g *gitlab.Client) *Subscriber {
 }
 
 func (s *Subscriber) Execute(c slack.SlashCommand) slack.Msg {
+	errors := multi_error.New()
 	args, err := s.parseArgs(c.Text)
 	if err != nil {
 		return s.Command.Help(err.Error())
 	}
-
-	err = s.processSubscription(*args.id, c.ChannelID)
-	if err != nil {
-		return s.Command.Help(err.Error())
+	for _, p := range args.projects {
+		err = s.processSubscription(p, c.ChannelID)
+		if err != nil {
+			log.Println(err)
+			errors.Append(err)
+		}
+	}
+	if !errors.IsEmpty() {
+		return s.Command.Help(errors.Error())
 	}
 
 	return s.Command.TextMessage("Successfully subscribed")
@@ -59,9 +66,9 @@ func (s *Subscriber) processSubscription(id, channelID string) error {
 func (s *Subscriber) parseArgs(input string) (args, error) {
 	pieces := s.Command.SplitCommandLine(input)
 	res := args{}
-	if len(pieces) != 1 {
+	if len(pieces) < 1 {
 		return res, fmt.Errorf("invalid number of arguments")
 	}
-	res.id = &pieces[0]
+	res.projects = pieces
 	return res, nil
 }

@@ -89,17 +89,17 @@ func (c Client) ValidateSubscription(name string) error {
 	case 1:
 		_, _, err := c.client.Groups.GetGroup(name)
 		if err != nil {
-			return fmt.Errorf("group not found")
+			return fmt.Errorf("group %s not found", name)
 		}
 		return nil
 	case 2:
 		_, _, err := c.client.Projects.GetProject(name, &g.GetProjectOptions{})
 		if err != nil {
-			return fmt.Errorf("project not found")
+			return fmt.Errorf("project %s not found", name)
 		}
 		return nil
 	default:
-		return fmt.Errorf("invalid name")
+		return fmt.Errorf("invalid name %s", name)
 	}
 }
 
