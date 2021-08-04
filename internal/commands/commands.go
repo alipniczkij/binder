@@ -68,7 +68,7 @@ func (me Command) Help(error string) slack.Msg {
 					Type: "section",
 					Text: slack.NewTextBlockObject(
 						slack.MarkdownType,
-						fmt.Sprintf("Invalid command: %v", error),
+						fmt.Sprintf("Invalid command:\n%v", error),
 						false,
 						false,
 					),

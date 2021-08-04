@@ -22,7 +22,7 @@ go run cmd/binder/main.go
 
 ## Commands
 
-- /subscribe {group or project name} (ex. alipniczkij/binder)
+- /subscribe {group or project name or more} (ex. alipniczkij/binder)
   
   To subscribe a specific channel to notifications from the gitlab group or project, you must:
     1. Add your bot to channel/chat
@@ -34,7 +34,7 @@ go run cmd/binder/main.go
 If you want to subscribe your channel to notifications for a specific project (for example, your_group/binder), you need to check whether there is a webhook on the group to which the project belongs.
 If there is a webhook for group, then you do NOT need to add a webhook for the project. If you add a webhook to the project as well as group, notifications will be duplicated in all channels
 
-- /unbsubscribe {group or project name}
+- /unbsubscribe {group or project name 1 or more}
 
   Unsubscribes your channel/chat from notifications for the specified group or project
 

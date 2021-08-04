@@ -119,10 +119,14 @@ func (m *Mapper) Delete(key, value, bucket string) error {
 		}
 		existed, found := m.Get(key, bucket)
 		if !found {
-			return fmt.Errorf("not found")
+			return fmt.Errorf("%s not found", key)
 		}
-		updated := m.deleteValue(existed, value)
-		data, err := m.encodeValue(updated)
+		updatedValue, found := m.deleteValue(existed, value)
+		if !found {
+			return fmt.Errorf("%s not found", key)
+
+		}
+		data, err := m.encodeValue(updatedValue)
 		if err != nil {
 			return fmt.Errorf("error while encoding %s: %s", value, err.Error())
 		}
@@ -142,14 +146,16 @@ func (m *Mapper) Close() error {
 	return m.db.Close()
 }
 
-func (m *Mapper) deleteValue(s []string, value string) []string {
+func (m *Mapper) deleteValue(s []string, value string) ([]string, bool) {
+	var found bool
 	updated := s
 	for i := range s {
 		if s[i] == value {
+			found = true
 			updated = remove(s, i)
 		}
 	}
-	return updated
+	return updated, found
 }
 
 func (m *Mapper) bytes(s string) []byte {
